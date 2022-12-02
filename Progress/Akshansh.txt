@@ -1,0 +1,12 @@
+1/12/22- Looked up for similar projects and youtube tutorials on PETL/Pandas, etc.
+
+Needed transformations-
+
+1) Remove 1st column
+
+2) Add product name table from product ID details
+
+3) Add product price from product ID details
+
+4) Multiply quantity and product price to display in total order value
+
