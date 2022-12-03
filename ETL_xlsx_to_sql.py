@@ -24,47 +24,50 @@ trans= pd.read_excel("Transaction details.xlsx",sheet_name="Sheet1",engine='open
 print(prod1)
 print(trans)
 
+df=pd.merge(trans,prod1)
+print(df)
+
 #trans.to_sql('transactions',engine,if_exists='replace')
-filename="Transaction details.xlsx"
-def extract():
-    try:
-        directory = dir
-        # iterate over files in the directory
-        for filename in os.listdir(directory):
-            #get filename without ext
-            file_wo_ext = os.path.splitext(filename)[0]
-            # only process excel files
-            if filename.endswith(".xlsx"):
-                f = os.path.join(directory, filename)
-                # checking if it is a file
-                if os.path.isfile(f):
-                    df = pd.read_excel(f)
-                    # call to load
-                    load(df, file_wo_ext)
-    except Exception as e:
-        print("Data extract error: " + str(e))
+# filename="Transaction details.xlsx"
+# def extract():
+#     try:
+#         directory = dir
+#         # iterate over files in the directory
+#         for filename in os.listdir(directory):
+#             #get filename without ext
+#             file_wo_ext = os.path.splitext(filename)[0]
+#             # only process excel files
+#             if filename.endswith(".xlsx"):
+#                 f = os.path.join(directory, filename)
+#                 # checking if it is a file
+#                 if os.path.isfile(f):
+#                     df = pd.read_excel(f)
+#                     # call to load
+#                     load(df, file_wo_ext)
+#     except Exception as e:
+#         print("Data extract error: " + str(e))
 
-#load data to postgres
-def load(df, tbl):
-    try:
-        rows_imported = 0
-        engine = create_engine(f'postgresql://{uid}:{pwd}@{server}:{port}/{db}')
-        print(f'importing rows {rows_imported} to {rows_imported + len(df)}... ')
-        # save df to postgres
-        df.to_sql(f"stg_{tbl}", engine, if_exists='replace', index=False)
-        rows_imported += len(df)
-        # add elapsed time to final print out
-        print("Data imported successful")
+# #load data to postgres
+# def load(df, tbl):
+#     try:
+#         rows_imported = 0
+#         engine = create_engine(f'postgresql://{uid}:{pwd}@{server}:{port}/{db}')
+#         print(f'importing rows {rows_imported} to {rows_imported + len(df)}... ')
+#         # save df to postgres
+#         df.to_sql(f"stg_{tbl}", engine, if_exists='replace', index=False)
+#         rows_imported += len(df)
+#         # add elapsed time to final print out
+#         print("Data imported successful")
         
-    except Exception as e:
+#     except Exception as e:
 
-        print("Data load error: " + str(e))
+#         print("Data load error: " + str(e))
 
-try:
-    #call extract function
-    df = extract()
-except Exception as e:
-    print("Error while extracting data: " + str(e))
+# try:
+#     #call extract function
+#     df = extract()
+# except Exception as e:
+#     print("Error while extracting data: " + str(e))
 
 
 
