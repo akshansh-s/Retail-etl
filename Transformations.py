@@ -14,17 +14,31 @@ def read_source():
     sheet=input("\nEnter the sheet name: ")
     file=pd.read_excel(val,sheet_name=sheet)
     print(file)
+    return file
+
+def write_target(rs):
+    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    sheet = input("\nEnter the sheet name: ")
+    rs.to_excel(val, sheet_name=sheet)
 
 if __name__ == "__main__":
-    print("Hello user!\nHow can I help you with data today?:-")
-    print("\n1. Read data from source")
-    print("\n2. Write data to target")
-    print("\n3. Read data from source")
+    choice = 1
 
-    choice=int(input())
-    if(choice==1):
-        read_source()
-    #elif(choice==2):
+    while choice!=4:
+        print("Hello user!\nHow can I help you with data today?:-")
+        print("\n1. Read data from source")
+        print("\n2. Write data to target")
+        print("\n3. Read data from source")
+        print("\n4. Exit")
+
+        choice=int(input())
+        if(choice==1):
+            rs = read_source()
+        elif(choice==2):
+            write_target(rs)
+        else:
+            quit()
+
 
 
 
