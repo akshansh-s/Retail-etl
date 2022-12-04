@@ -1,12 +1,12 @@
 import pandas as pd
-import datetime
-import numpy as np
-import mysql.connector
-import csv
-import os
-import requests
-from sqlalchemy import create_engine
-import pyodbc
+# import datetime
+# import numpy as np
+# import mysql.connector
+# import csv
+# import os
+# import requests
+# from sqlalchemy import create_engine
+# import pyodbc
 
 def read_source():
     
@@ -21,21 +21,34 @@ def write_target(rs):
     sheet = input("\nEnter the sheet name: ")
     rs.to_excel(val, sheet_name=sheet)
 
+def aggregate(group_choice):
+    grouped_data=rs.groupby(group_choice)
+    print(grouped_data)
+    sum_gd=grouped_data["Sales_Amount"].sum()
+    print(sum_gd)
+    agg_gd=grouped_data.agg({'Sales_Amount':'mean'})
+    print("\n",agg_gd)
+
 if __name__ == "__main__":
     choice = 1
 
     while choice!=4:
-        print("Hello user!\nHow can I help you with data today?:-")
+        print("\nHello user!\nHow can I help you with data today?:-")
         print("\n1. Read data from source")
         print("\n2. Write data to target")
-        print("\n3. Read data from source")
-        print("\n4. Exit")
+        print("\n3. Aggregate data")
+        print("\n4. Exit\n")
 
         choice=int(input())
         if(choice==1):
             rs = read_source()
         elif(choice==2):
             write_target(rs)
+        elif(choice==3):
+            print("\nGroup data by? (Mention Column Name):\n")
+            group_choice=input()
+            aggregate(group_choice)
+            #grouped_data.to_excel(r"C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Excel dataset\P1.xlsx ",sheet_name="Sheet1")
         else:
             quit()
 
