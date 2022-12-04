@@ -8,24 +8,44 @@ import requests
 from sqlalchemy import create_engine
 import pyodbc
 
+def read_source():
+    
+    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    sheet=input("\nEnter the sheet name: ")
+    file=pd.read_excel(val,sheet_name=sheet)
+    print(file)
 
-pwd = "akshansh2001"
-uid = 10
-server = "localhost"
-db = "retail_etl"
-port = "5433"
-dir = r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl'
+if __name__ == "__main__":
+    print("Hello user!\nHow can I help you with data today?:-")
+    print("\n1. Read data from source")
+    print("\n2. Write data to target")
+    print("\n3. Read data from source")
+    read_source()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #engine = create_engine(r'postgresql://posgres:akshansh2001@127.0.0.1:5433/retail_etl', echo = True)
 
-prod1 = pd.read_excel("Product details.xlsx",sheet_name="Sheet1",engine='openpyxl')
-trans= pd.read_excel("Transaction details.xlsx",sheet_name="Sheet1",engine='openpyxl')
+# prod1 = pd.read_excel(r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Product details.xlsx',sheet_name="Sheet1")
+# trans= pd.read_excel(r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Transaction details.xlsx',sheet_name="Sheet1")
 
-print(prod1)
-print(trans)
-
-df=pd.merge(trans,prod1)
-print(df)
+# df=pd.merge(trans,prod1)
+# #print(df)
 
 #trans.to_sql('transactions',engine,if_exists='replace')
 # filename="Transaction details.xlsx"
