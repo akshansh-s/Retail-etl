@@ -20,7 +20,12 @@ if __name__ == "__main__":
     print("\n1. Read data from source")
     print("\n2. Write data to target")
     print("\n3. Read data from source")
-    read_source()
+
+    choice=int(input())
+    if(choice==1):
+        read_source()
+    #elif(choice==2):
+
 
 
 
@@ -41,7 +46,7 @@ if __name__ == "__main__":
 
 #engine = create_engine(r'postgresql://posgres:akshansh2001@127.0.0.1:5433/retail_etl', echo = True)
 
-# prod1 = pd.read_excel(r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Product details.xlsx',sheet_name="Sheet1")
+# prod1 = pd.read_excel(r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Excel dataset\Product details.xlsx',sheet_name="Sheet1")
 # trans= pd.read_excel(r'C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Transaction details.xlsx',sheet_name="Sheet1")
 
 # df=pd.merge(trans,prod1)
@@ -88,7 +93,3 @@ if __name__ == "__main__":
 #     df = extract()
 # except Exception as e:
 #     print("Error while extracting data: " + str(e))
-
-
-
-
