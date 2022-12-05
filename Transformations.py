@@ -36,6 +36,17 @@ def joiner(file1,file2):
     c=int(input())
     if(c==1):
         write_target(ff)
+    else:
+        print("\nWrong input")
+
+def convert(rs):
+    c=int(input("\nDo you want to convert to: \n1. JSON\n2. CSV\n"))
+    if(c==1):
+        print(rs.to_json(orient='records'))
+    elif(c==2):
+        print(rs.to_csv(index=False))
+    else:
+        print("\nWrong input")
 
 if __name__ == "__main__":
     choice = 1
@@ -46,7 +57,8 @@ if __name__ == "__main__":
         print("\n2. Write data to target")
         print("\n3. Aggregate data")
         print("\n4. Join data")
-        print("\n5. Exit\n")
+        print("\n5. Convert into JSON/CSV")
+        print("\n6. Exit\n")
 
         choice=int(input())
         if(choice==1):
@@ -69,7 +81,7 @@ if __name__ == "__main__":
             joiner(f1,f2)
 
         elif(choice==5):
-            
+            convert(rs)
 
         else:
             quit()
