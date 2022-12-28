@@ -59,6 +59,7 @@ if __name__ == "__main__":
         print("\n3. Aggregate data")
         print("\n4. Join data")
         print("\n5. Convert into JSON/CSV")
+        print("\n6. Clean Data")
         print("\n6. Exit\n")
 
         choice=int(input())
@@ -83,6 +84,9 @@ if __name__ == "__main__":
 
         elif(choice==5):
             convert(rs)
+
+        elif(choice==6):
+            clean(rs)
 
         else:
             quit()
