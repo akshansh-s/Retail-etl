@@ -9,7 +9,6 @@ import pandas as pd
 # import pyodbc
 
 def read_source():
-    
     val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
     sheet=input("\nEnter the sheet name: ")
     file=pd.read_excel(val,sheet_name=sheet)
@@ -23,7 +22,7 @@ def write_target(rs):
 
 def aggregate(group_choice):
     grouped_data=rs.groupby(group_choice)
-    print(grouped_data)
+    #print(grouped_data)
     sum_gd=grouped_data["Sales_Amount"].sum()
     print(sum_gd)
     agg_gd=grouped_data.agg({'Sales_Amount':'mean'})
@@ -36,6 +35,8 @@ def joiner(file1,file2):
     c=int(input())
     if(c==1):
         write_target(ff)
+    elif(c==2):
+        print("Okay")
     else:
         print("\nWrong input")
 
