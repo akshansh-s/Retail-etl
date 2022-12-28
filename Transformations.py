@@ -49,6 +49,13 @@ def convert(rs):
     else:
         print("\nWrong input")
 
+
+def clean(rs):
+    duplicate_rows = rs[rs.duplicated()]
+    duplicate_rows.to_excel('duplicates.xlsx', index=False)
+    rs = rs.drop_duplicates()
+
+
 if __name__ == "__main__":
     choice = 1
 
