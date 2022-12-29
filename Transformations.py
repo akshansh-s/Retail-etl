@@ -59,7 +59,7 @@ def clean(rs):
 if __name__ == "__main__":
     choice = 1
 
-    while choice!=6:
+    while choice!=7:
         print("\nHello user!\nHow can I help you with data today?:-")
         print("\n1. Read data from source")
         print("\n2. Write data to target")
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         print("\n4. Join data")
         print("\n5. Convert into JSON/CSV")
         print("\n6. Clean Data")
-        print("\n6. Exit\n")
+        print("\n7. Exit\n")
 
         choice=int(input())
         if(choice==1):
