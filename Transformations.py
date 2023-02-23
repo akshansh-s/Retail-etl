@@ -1,4 +1,8 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import seaborn as sns
+
 # import datetime
 # import numpy as np
 # import mysql.connector
@@ -56,10 +60,70 @@ def clean(rs):
     rs = rs.drop_duplicates()
 
 
+def filter(rs):
+    sales = float(input('\nEnter Sales Amount: '))
+    sales_amount = rs[(rs['Sales_Amount'] > sales)] 
+    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    sheet = input("\nEnter the sheet name: ")
+    sales_amount.to_excel(val, sheet_name=sheet)
+    
+
+def normalize(rs):
+    rs_min_max_scaled = rs.copy()
+  
+    # apply normalization techniques
+    #for column in rs_min_max_scaled.columns:
+        #if rs[column].dtype.kind in 'biufc':
+    rs_min_max_scaled['Sales_Amount'] = (rs_min_max_scaled['Sales_Amount'] - rs_min_max_scaled['Sales_Amount'].min()) / (rs_min_max_scaled['Sales_Amount'].max() - rs_min_max_scaled['Sales_Amount'].min())    
+  
+    # view normalized data
+    #print(rs_min_max_scaled)
+    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    sheet = input("\nEnter the sheet name: ")
+    rs_min_max_scaled.to_excel(val, sheet_name=sheet)
+    return rs_min_max_scaled
+
+
+def bar_graph(rs):
+    '''x_axis = rs['Date']
+    y_axis = rs['Sales_Amount']
+    plt.bar(x_axis, y_axis)
+    plt.xlabel("Date")
+    plt.ylabel("Sales_Amount")
+    plt.show()'''
+
+    #sales_demo=rs.groupby(["Date"]).aggregate({"Sales_Amount":"sum"})
+    #print(sales_demo)
+
+    '''x_axis = sales_demo['Date']
+    y_axis = sales_demo['Sales_Amount']
+    plt.bar(x_axis, y_axis)
+    plt.xlabel("Date")
+    plt.ylabel("Sales_Amount")
+    plt.show()'''
+
+    '''rs_copy = rs.copy()
+    rs_copy["Date"]=pd.to_datetime(rs_copy['Date'])
+    rs_copy.groupby([rs_copy.Date.dt.year, rs_copy.Date.dt.month]).sum().plot.bar()'''
+
+    sales_demo=rs.groupby([rs.Date.dt.year, rs.Date.dt.month]).aggregate({"Sales_Amount":"sum"})
+    sales_demo.plot(kind='bar')
+    plt.xticks(rotation=45)
+    plt.show()
+
+
+def line_graph(rs):
+    sales_demo=rs.groupby(["Date"]).aggregate({"Sales_Amount":"sum"})
+    sales_demo.plot()
+    plt.xticks(rotation=45)
+    plt.show()
+
+
+
 if __name__ == "__main__":
     choice = 1
 
-    while choice!=7:
+    while choice!=15:
         print("\nHello user!\nHow can I help you with data today?:-")
         print("\n1. Read data from source")
         print("\n2. Write data to target")
@@ -67,7 +131,11 @@ if __name__ == "__main__":
         print("\n4. Join data")
         print("\n5. Convert into JSON/CSV")
         print("\n6. Clean Data")
-        print("\n7. Exit\n")
+        print("\n7. Filter Data (based on Sales Amount)")
+        print("\n8. Normalize")
+        print("\n9. Plot bar graph")
+        print("\n10. Plot Line Graph")
+        print("\n15. Exit\n")
 
         choice=int(input())
         if(choice==1):
@@ -95,5 +163,17 @@ if __name__ == "__main__":
         elif(choice==6):
             clean(rs)
 
+        elif(choice==7):
+            filter(rs)
+
+        elif(choice==8):
+            normalized = normalize(rs)
+
+        elif(choice==9):
+            bar_graph(rs)
+
+        elif(choice==10):
+            line_graph(rs)
+        
         else:
             quit()
