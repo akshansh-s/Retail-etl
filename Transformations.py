@@ -61,8 +61,23 @@ def clean(rs):
 
 
 def filter(rs):
-    sales = float(input('\nEnter Sales Amount: '))
-    sales_amount = rs[(rs['Sales_Amount'] > sales)] 
+    ch=1
+    print("Filter:")
+    print("1.Less than")
+    print("2. Greater than")
+    ch=int(input())
+
+    if (ch==1):
+        sales = float(input('\nEnter Sales Amount: '))
+        sales_amount = rs[(rs['Sales_Amount'] < sales)] 
+
+    elif (ch==2):
+        sales = float(input('\nEnter Sales Amount: '))
+        sales_amount = rs[(rs['Sales_Amount'] > sales)] 
+
+    else:
+        pass
+    
     val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
     sheet = input("\nEnter the sheet name: ")
     sales_amount.to_excel(val, sheet_name=sheet)
@@ -83,28 +98,12 @@ def normalize(rs):
     rs_min_max_scaled.to_excel(val, sheet_name=sheet)
     return rs_min_max_scaled
 
+def sort(rs):
+    Final_result = rs.sort_values('Sales_Amount')
+    print(Final_result)
+
 
 def bar_graph(rs):
-    '''x_axis = rs['Date']
-    y_axis = rs['Sales_Amount']
-    plt.bar(x_axis, y_axis)
-    plt.xlabel("Date")
-    plt.ylabel("Sales_Amount")
-    plt.show()'''
-
-    #sales_demo=rs.groupby(["Date"]).aggregate({"Sales_Amount":"sum"})
-    #print(sales_demo)
-
-    '''x_axis = sales_demo['Date']
-    y_axis = sales_demo['Sales_Amount']
-    plt.bar(x_axis, y_axis)
-    plt.xlabel("Date")
-    plt.ylabel("Sales_Amount")
-    plt.show()'''
-
-    '''rs_copy = rs.copy()
-    rs_copy["Date"]=pd.to_datetime(rs_copy['Date'])
-    rs_copy.groupby([rs_copy.Date.dt.year, rs_copy.Date.dt.month]).sum().plot.bar()'''
 
     sales_demo=rs.groupby([rs.Date.dt.year, rs.Date.dt.month]).aggregate({"Sales_Amount":"sum"})
     sales_demo.plot(kind='bar')
@@ -132,9 +131,10 @@ if __name__ == "__main__":
         print("\n5. Convert into JSON/CSV")
         print("\n6. Clean Data")
         print("\n7. Filter Data (based on Sales Amount)")
-        print("\n8. Normalize")
-        print("\n9. Plot bar graph")
-        print("\n10. Plot Line Graph")
+        print("\n8. Normalize data[0-1]")
+        print("\n9. Sort data")
+        print("\n10. Plot bar graph")
+        print("\n11. Plot Line Graph")
         print("\n15. Exit\n")
 
         choice=int(input())
@@ -170,9 +170,12 @@ if __name__ == "__main__":
             normalized = normalize(rs)
 
         elif(choice==9):
-            bar_graph(rs)
+            sort(rs)
 
         elif(choice==10):
+            bar_graph(rs)
+
+        elif(choice==11):
             line_graph(rs)
         
         else:
