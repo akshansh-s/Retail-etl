@@ -62,8 +62,8 @@ def clean(rs):
 
 def filter(rs):
     ch=1
-    print("Filter:")
-    print("1.Less than")
+    print("\nFilter:")
+    print("1. Less than")
     print("2. Greater than")
     ch=int(input())
 
@@ -77,7 +77,7 @@ def filter(rs):
 
     else:
         pass
-    
+
     val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
     sheet = input("\nEnter the sheet name: ")
     sales_amount.to_excel(val, sheet_name=sheet)
@@ -97,6 +97,7 @@ def normalize(rs):
     sheet = input("\nEnter the sheet name: ")
     rs_min_max_scaled.to_excel(val, sheet_name=sheet)
     return rs_min_max_scaled
+
 
 def sort(rs):
     Final_result = rs.sort_values('Sales_Amount')
