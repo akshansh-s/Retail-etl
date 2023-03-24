@@ -33,7 +33,9 @@ def aggregate(group_choice):
     print("\n",agg_gd)
 
 def joiner(file1,file2):
-    ff=pd.merge(file1,file2)
+    #join_choice=int(input("What is"))
+    common_col=input("Enter the common key column name: ")
+    ff=pd.merge(file1,file2,on=common_col)
     print(ff)
     print("Want to save the merged table in an excel file?\n1. Yes\t2. No\n")
     c=int(input())
@@ -159,7 +161,11 @@ if __name__ == "__main__":
             joiner(f1,f2)
 
         elif(choice==5):
-            convert(rs)
+            if 'rs' in locals() or 'rs' in globals():
+                convert(rs)
+            else:
+                rs=read_source()
+                convert(rs)
 
         elif(choice==6):
             clean(rs)
