@@ -2,7 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
-
+import json
+import csv
 # import datetime
 # import numpy as np
 # import mysql.connector
@@ -20,7 +21,7 @@ def read_source():
     return file
 
 def write_target(rs):
-    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    val = input("\nPlease enter the destination of the data file along with filename & extension:\n")
     sheet = input("\nEnter the sheet name: ")
     rs.to_excel(val, sheet_name=sheet)
 
@@ -49,12 +50,35 @@ def joiner(file1,file2):
 def convert(rs):
     c=int(input("\nDo you want to convert to: \n1. JSON\n2. CSV\n"))
     if(c==1):
-        print(rs.to_json(orient='records'))
+        convert_output=rs.to_json(orient='records')
+        print(convert_output)
+        print("Want to save the file?\n1. Yes\t2. No\n")
+        c1=int(input())
+        if(c1==1):
+            filename = input("Enter filename: ")+".json"
+            with open(filename, "w") as file:
+                # write the data to the JSON file
+                json.dump(convert_output, file)
+                print(f"Data written to {filename} successfully.")
+
     elif(c==2):
-        print(rs.to_csv(index=False))
+        convert_output=rs.to_csv(index=False)
+        print(convert_output)
+        print("Want to save the file?\n1. Yes\t2. No\n")
+        c1=int(input())
+        if(c1==1):
+            filename = input("Enter filename: ")+".csv"
+            with open(filename, 'w', newline='') as file:
+
+                # create a CSV writer object
+                writer = csv.writer(file)
+
+                # write the data to the CSV file
+                writer.writerows(convert_output)
+
+                print(f"Data written to {filename} successfully.")
     else:
         print("\nWrong input")
-
 
 def clean(rs):
     duplicate_rows = rs[rs.duplicated()]
@@ -120,6 +144,68 @@ def line_graph(rs):
     plt.xticks(rotation=45)
     plt.show()
 
+def Missing(rs):
+    missing_cols = rs.isnull().sum()[db.isnull().sum() > 0]
+    missing_cols
+    
+def Missing_data(rs):
+    missing_data = rs.isnull()
+    for column in missing_data.columns.values.tolist():
+        print(column)
+        print(missing_data[column].value_counts())
+        print("")
+    
+    
+def rescale_data(rs):
+
+   # This function rescales the values of a column or set of columns to a new range.
+    columns = input("Please enter your columns: ")
+    new_min = input("Please enter your new_min: ")
+    new_max = input("Please enter your new_max: ")
+    old_min = rs[columns].min()
+    old_max = rs[columns].max()
+    
+    rescaled_rs = rs.copy()
+    for column in columns:
+        rescaled_rs[column] = ((rs[column] - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+    
+    return rescaled_rs
+    
+def describe(rs):
+    """
+    Return a DataFrame containing statistics of the input DataFrame df.
+
+    Parameters:
+    df (pandas.DataFrame): The input DataFrame to describe.
+
+    Returns:
+    pandas.DataFrame: A DataFrame containing statistics of the input DataFrame df.
+    """
+    num_cols = df.select_dtypes(include=[np.number]).columns
+    stats = rs['count'] = stats.loc['count'].astype(int)
+    stats.loc['missing'] = rs.isna().sum()
+    stats.loc['missing_pct'] = rs.isna().mean() * 100
+    return stats
+def pivot_data(rs):
+    
+    
+    index_column = input("Please enter your index_column: ")
+    columns_column = input("Please enter your columns_column: ")
+    values_column = input("Please enter your values_column: ")
+    '''
+    This function pivots a DataFrame from long to wide format.
+    '''
+    pivoted_rs = rs.pivot(index=index_column, columns=columns_column, values=values_column).reset_index()
+    
+    return pivoted_rs
+
+def merge_names(rs):
+    rs['name'] = rs['first_name'] + ' ' + rs['last_name']
+    print(rs)
+    return rs
+
+#You can add a function that pivots the data to show it in a different format.
+#For example, you could pivot the data to show the sales by region and month, instead of just by date.
 
 
 if __name__ == "__main__":
@@ -138,7 +224,13 @@ if __name__ == "__main__":
         print("\n9. Sort data")
         print("\n10. Plot bar graph")
         print("\n11. Plot Line Graph")
-        print("\n15. Exit\n")
+        print("\n12. No of Missing Values")
+        print("\n13. The missing data information ")
+        print("\n14. rescale_data ")    
+        print("\n15. describe")
+        print("\n16. pivots a DataFrame from long to wide format.")
+        print("\n17. Merging first and last name.")
+        print("\n18. Exit\n")
 
         choice=int(input())
         if(choice==1):
@@ -184,6 +276,25 @@ if __name__ == "__main__":
 
         elif(choice==11):
             line_graph(rs)
-        
+
+        elif(choice==12):
+            Missing(rs)
+            
+        elif(choice==13):
+            Missing_data(rs)
+                
+        elif(choice==14):
+            
+            rescale_data(rs)  
+            
+        elif(choice==15):
+            describe(rs)
+            
+        elif(choice==16):
+           
+            pivot_data(rs)
+        elif(choice==17):
+            merge_names(rs)
+               
         else:
             quit()
