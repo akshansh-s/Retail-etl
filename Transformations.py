@@ -186,6 +186,7 @@ def describe(rs):
     stats.loc['missing'] = rs.isna().sum()
     stats.loc['missing_pct'] = rs.isna().mean() * 100
     return stats
+
 def pivot_data(rs):
     
     
@@ -229,7 +230,7 @@ if __name__ == "__main__":
         print("\n14. rescale_data ")    
         print("\n15. describe")
         print("\n16. pivots a DataFrame from long to wide format.")
-        print("\n17. Merging first and last name.")
+#        print("\n17. Merging first and last name.")
         print("\n18. Exit\n")
 
         choice=int(input())
@@ -293,8 +294,8 @@ if __name__ == "__main__":
         elif(choice==16):
            
             pivot_data(rs)
-        elif(choice==17):
-            merge_names(rs)
+        # elif(choice==17):
+        #     merge_names(rs)
                
         else:
             quit()
