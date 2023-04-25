@@ -227,10 +227,10 @@ if __name__ == "__main__":
         print("\n11. Plot Line Graph")
         print("\n12. No of Missing Values")
         print("\n13. The missing data information ")
-        print("\n14. rescale_data ")    
-        print("\n15. describe")
-        print("\n16. pivots a DataFrame from long to wide format.")
-#        print("\n17. Merging first and last name.")
+        print("\n14. Rescale_data ")    
+        print("\n15. Describe")
+        print("\n16. Pivots a DataFrame from long to wide format.")
+        print("\n17. Merging two columns")
         print("\n18. Exit\n")
 
         choice=int(input())
@@ -238,7 +238,11 @@ if __name__ == "__main__":
             rs = read_source()
 
         elif(choice==2):
-            write_target(rs)
+            if 'rs' in locals() or 'rs' in globals():
+                write_target(rs)
+            else:
+                rs=read_source()
+                write_target(rs)
 
         elif(choice==3):
             print("\nGroup data by? (Mention Column Name):\n")
@@ -261,7 +265,11 @@ if __name__ == "__main__":
                 convert(rs)
 
         elif(choice==6):
-            clean(rs)
+            if 'rs' in locals() or 'rs' in globals():
+                clean(rs)
+            else:
+                rs=read_source()
+                clean(rs)
 
         elif(choice==7):
             filter(rs)
@@ -294,8 +302,8 @@ if __name__ == "__main__":
         elif(choice==16):
            
             pivot_data(rs)
-        # elif(choice==17):
-        #     merge_names(rs)
+        elif(choice==17):
+             merge_names(rs)
                
         else:
             quit()
