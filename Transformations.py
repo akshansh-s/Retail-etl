@@ -205,6 +205,31 @@ def merge_names(rs):
     print(rs)
     return rs
 
+def lookup(dataframe):
+    """
+    Searches for data in a DataFrame based on user-defined lookup conditions and returns the corresponding values in a specified column.
+    """
+
+    lookup_column = input("Enter the name of the column containing the lookup values: ")
+    condition_type = input(f"Enter the data type of the lookup condition (e.g., 'int', 'float', 'str'): ")
+
+    if condition_type == 'int':
+        condition = int(input("Enter the lookup condition (integer): "))
+    elif condition_type == 'float':
+        condition = float(input("Enter the lookup condition (float): "))
+    elif condition_type == 'str':
+        condition = input("Enter the lookup condition (string): ")
+    else:
+        print("Invalid data type entered. Please try again.")
+        return
+
+    return_column = input("Enter the name of the column containing the values to return: ")
+
+    result = dataframe.loc[dataframe[lookup_column] == condition, return_column]
+    print(result)
+    return result
+
+
 #You can add a function that pivots the data to show it in a different format.
 #For example, you could pivot the data to show the sales by region and month, instead of just by date.
 
@@ -231,7 +256,9 @@ if __name__ == "__main__":
         print("\n15. Describe")
         print("\n16. Pivots a DataFrame from long to wide format.")
         print("\n17. Merging two columns")
-        print("\n18. Exit\n")
+        print("\n18. Lookup")
+
+        print("\n19. Exit\n")
 
         choice=int(input())
         if(choice==1):
@@ -292,18 +319,24 @@ if __name__ == "__main__":
         elif(choice==13):
             Missing_data(rs)
                 
-        elif(choice==14):
-            
-            rescale_data(rs)  
+        # elif(choice==14):
+        #     rescale_data(rs)  
             
         elif(choice==15):
             describe(rs)
             
-        elif(choice==16):
-           
-            pivot_data(rs)
+        # elif(choice==16):
+        #     pivot_data(rs)
+
         elif(choice==17):
              merge_names(rs)
+        
+        elif(choice==18):
+            if 'rs' in locals() or 'rs' in globals():
+                convert(rs)
+            else:
+                rs=read_source()
+                lookup(rs)
                
         else:
             quit()
