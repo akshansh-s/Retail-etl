@@ -257,7 +257,6 @@ if __name__ == "__main__":
         print("\n16. Pivots a DataFrame from long to wide format.")
         print("\n17. Merging two columns")
         print("\n18. Lookup")
-
         print("\n19. Exit\n")
 
         choice=int(input())
@@ -294,9 +293,12 @@ if __name__ == "__main__":
         elif(choice==6):
             if 'rs' in locals() or 'rs' in globals():
                 clean(rs)
+                print("\nThe data has been cleaned\n")
             else:
                 rs=read_source()
                 clean(rs)
+                print("\nThe data has been cleaned\n")
+
 
         elif(choice==7):
             filter(rs)
@@ -333,7 +335,7 @@ if __name__ == "__main__":
         
         elif(choice==18):
             if 'rs' in locals() or 'rs' in globals():
-                convert(rs)
+                lookup(rs)
             else:
                 rs=read_source()
                 lookup(rs)
