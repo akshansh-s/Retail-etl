@@ -145,30 +145,36 @@ def line_graph(rs):
     plt.show()
 
 def Missing(rs):
-    missing_cols = rs.isnull().sum()[db.isnull().sum() > 0]
-    missing_cols
+    missing_cols = rs.isnull().sum()[rs.isnull().sum() > 0]
+    print(missing_cols)
+    
+def Missing(rs):
+    missing_cols = rs.isnull().sum()[rs.isnull().sum() > 0]
+    print(missing_cols)
     
 def Missing_data(rs):
     missing_data = rs.isnull()
     for column in missing_data.columns.values.tolist():
-        print(column)
-        print(missing_data[column].value_counts())
-        print("")
+      print(column)
+      print(missing_data[column].value_counts())
+      print("")
     
     
 def rescale_data(rs):
 
    # This function rescales the values of a column or set of columns to a new range.
-    columns = input("Please enter your columns: ")
-    new_min = input("Please enter your new_min: ")
-    new_max = input("Please enter your new_max: ")
+    columns = rs['Sales_Amount']
+    new_min = float(input("Please enter your new_min: "))
+    new_max = float(input("Please enter your new_max: "))
     old_min = rs[columns].min()
     old_max = rs[columns].max()
-    
+    rs[columns] = (rs[columns] - old_min) * (new_max - new_min) / (old_max - old_min) + new_min
+    rescaled_rs = rs[columns]
+    '''
     rescaled_rs = rs.copy()
     for column in columns:
         rescaled_rs[column] = ((rs[column] - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
-    
+    '''
     return rescaled_rs
     
 def describe(rs):
@@ -181,12 +187,12 @@ def describe(rs):
     Returns:
     pandas.DataFrame: A DataFrame containing statistics of the input DataFrame df.
     """
-    num_cols = df.select_dtypes(include=[np.number]).columns
-    stats = rs['count'] = stats.loc['count'].astype(int)
-    stats.loc['missing'] = rs.isna().sum()
-    stats.loc['missing_pct'] = rs.isna().mean() * 100
-    return stats
-
+    print(rs.describe())
+    #num_cols = rs.select_dtypes(include=[np.number]).columns
+    #stats = rs['count'] = stats.loc['count'].astype(int)
+    #stats.loc['missing'] = rs.isna().sum()
+    #stats.loc['missing_pct'] = rs.isna().mean() * 100
+   # return stats
 def pivot_data(rs):
     
     
@@ -229,19 +235,52 @@ def lookup(dataframe):
     print(result)
     return result
 
+def fill_missing_values(df):
+    print("\nColumns with missing values:")
+    missing_cols = df.isnull().sum()[df.isnull().sum() > 0]
+    print(missing_cols)
 
-#You can add a function that pivots the data to show it in a different format.
-#For example, you could pivot the data to show the sales by region and month, instead of just by date.
+    print("\nChoose a method for filling missing values:")
+    print("1. Fill with a specific value")
+    print("2. Fill using the mean value of the column")
+    print("3. Fill using the median value of the column")
+    print("4. Fill using the mode value of the column")
+    print("5. Forward fill (use the previous row value)")
+    print("6. Backward fill (use the next row value)")
+
+    choice = int(input())
+
+    if choice == 1:
+        value = input("Enter the specific value to fill missing data: ")
+        df.fillna(value, inplace=True)
+    elif choice == 2:
+        for col in missing_cols.index:
+            df[col].fillna(df[col].mean(), inplace=True)
+    elif choice == 3:
+        for col in missing_cols.index:
+            df[col].fillna(df[col].median(), inplace=True)
+    elif choice == 4:
+        for col in missing_cols.index:
+            df[col].fillna(df[col].mode()[0], inplace=True)
+    elif choice == 5:
+        df.fillna(method='ffill', inplace=True)
+    elif choice == 6:
+        df.fillna(method='bfill', inplace=True)
+    else:
+        print("Invalid choice. Please try again.")
+
+    print("\nMissing values filled successfully.")
+    return df
 
 
 if __name__ == "__main__":
     choice = 1
 
-    while choice!=15:
+    while choice!=20:
         print("\nHello user!\nHow can I help you with data today?:-")
         print("\n1. Read data from source")
         print("\n2. Write data to target")
-        print("\n3. Aggregate data")
+        print("\n3. Aggregate data of single column")
         print("\n4. Join data")
         print("\n5. Convert into JSON/CSV")
         print("\n6. Clean Data")
@@ -253,11 +292,12 @@ if __name__ == "__main__":
         print("\n12. No of Missing Values")
         print("\n13. The missing data information ")
         print("\n14. Rescale_data ")    
-        print("\n15. Describe")
+        print("\n15. Statistics of data")
         print("\n16. Pivots a DataFrame from long to wide format.")
         print("\n17. Merging two columns")
         print("\n18. Lookup")
-        print("\n19. Exit\n")
+        print("\n19. Handle missing values")
+        print("\n20. Exit\n")
 
         choice=int(input())
         if(choice==1):
@@ -339,6 +379,12 @@ if __name__ == "__main__":
             else:
                 rs=read_source()
                 lookup(rs)
-               
+        
+        elif(choice==19):
+            if 'rs' in locals() or 'rs' in globals():
+                fill_missing_values(rs)
+            else:
+                rs=read_source()
+                fill_missing_values(rs)               
         else:
             quit()
