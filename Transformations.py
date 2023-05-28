@@ -92,7 +92,7 @@ def filter(rs):
     print("1. Less than")
     print("2. Greater than")
     ch=int(input())
-
+#C:\Users\saksh\Desktop\Akshansh\Coding\Github\Retail-etl\Excel dataset
     if (ch==1):
         sales = float(input('\nEnter Sales Amount: '))
         sales_amount = rs[(rs['Sales_Amount'] < sales)] 
@@ -160,22 +160,22 @@ def Missing_data(rs):
       print("")
     
     
-def rescale_data(rs):
+# def rescale_data(rs):
 
-   # This function rescales the values of a column or set of columns to a new range.
-    columns = rs['Sales_Amount']
-    new_min = float(input("Please enter your new_min: "))
-    new_max = float(input("Please enter your new_max: "))
-    old_min = rs[columns].min()
-    old_max = rs[columns].max()
-    rs[columns] = (rs[columns] - old_min) * (new_max - new_min) / (old_max - old_min) + new_min
-    rescaled_rs = rs[columns]
-    '''
-    rescaled_rs = rs.copy()
-    for column in columns:
-        rescaled_rs[column] = ((rs[column] - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
-    '''
-    return rescaled_rs
+#    # This function rescales the values of a column or set of columns to a new range.
+#     columns = rs['Sales_Amount']
+#     new_min = float(input("Please enter your new_min: "))
+#     new_max = float(input("Please enter your new_max: "))
+#     old_min = rs[columns].min()
+#     old_max = rs[columns].max()
+#     rs[columns] = (rs[columns] - old_min) * (new_max - new_min) / (old_max - old_min) + new_min
+#     rescaled_rs = rs[columns]
+#     '''
+#     rescaled_rs = rs.copy()
+#     for column in columns:
+#         rescaled_rs[column] = ((rs[column] - old_min) / (old_max - old_min)) * (new_max - new_min) + new_min
+#     '''
+#     return rescaled_rs
     
 def describe(rs):
     """
@@ -193,18 +193,18 @@ def describe(rs):
     #stats.loc['missing'] = rs.isna().sum()
     #stats.loc['missing_pct'] = rs.isna().mean() * 100
    # return stats
-def pivot_data(rs):
+# def pivot_data(rs):
     
     
-    index_column = input("Please enter your index_column: ")
-    columns_column = input("Please enter your columns_column: ")
-    values_column = input("Please enter your values_column: ")
-    '''
-    This function pivots a DataFrame from long to wide format.
-    '''
-    pivoted_rs = rs.pivot(index=index_column, columns=columns_column, values=values_column).reset_index()
+#     index_column = input("Please enter your index_column: ")
+#     columns_column = input("Please enter your columns_column: ")
+#     values_column = input("Please enter your values_column: ")
+#     '''
+#     This function pivots a DataFrame from long to wide format.
+#     '''
+#     pivoted_rs = rs.pivot(index=index_column, columns=columns_column, values=values_column).reset_index()
     
-    return pivoted_rs
+#     return pivoted_rs
 
 def merge_names(rs):
     rs['name'] = rs['first_name'] + ' ' + rs['last_name']
