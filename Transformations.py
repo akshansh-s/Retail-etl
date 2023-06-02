@@ -291,7 +291,7 @@ if __name__ == "__main__":
         print("\n11. Plot Line Graph")
         print("\n12. No of Missing Values")
         print("\n13. The missing data information ")
-        print("\n14. Rescale_data ")    
+        #print("\n14. Rescale_data ")    
         print("\n15. Statistics of data")
         print("\n16. Pivots a DataFrame from long to wide format.")
         print("\n17. Merging two columns")
