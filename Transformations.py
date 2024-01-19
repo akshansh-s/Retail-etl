@@ -118,10 +118,10 @@ def normalize(rs):
     rs_min_max_scaled['Sales_Amount'] = (rs_min_max_scaled['Sales_Amount'] - rs_min_max_scaled['Sales_Amount'].min()) / (rs_min_max_scaled['Sales_Amount'].max() - rs_min_max_scaled['Sales_Amount'].min())    
   
     # view normalized data
-    #print(rs_min_max_scaled)
-    val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
-    sheet = input("\nEnter the sheet name: ")
-    rs_min_max_scaled.to_excel(val, sheet_name=sheet)
+    print(rs_min_max_scaled)
+    #val = input("\nPlease enter the destination of the excel file along with filename & extension:\n")
+    #sheet = input("\nEnter the sheet name: ")
+    #rs_min_max_scaled.to_excel(val, sheet_name=sheet)
     return rs_min_max_scaled
 
 
@@ -242,9 +242,9 @@ def fill_missing_values(df):
 
     print("\nChoose a method for filling missing values:")
     print("1. Fill with a specific value")
-    print("2. Fill using the mean value of the column")
-    print("3. Fill using the median value of the column")
-    print("4. Fill using the mode value of the column")
+    #print("2. Fill using the mean value of the column")
+    #print("3. Fill using the median value of the column")
+    #print("4. Fill using the mode value of the column")
     print("5. Forward fill (use the previous row value)")
     print("6. Backward fill (use the next row value)")
 
@@ -293,7 +293,7 @@ if __name__ == "__main__":
         print("\n13. The missing data information ")
         #print("\n14. Rescale_data ")    
         print("\n15. Statistics of data")
-        print("\n16. Pivots a DataFrame from long to wide format.")
+        #print("\n16. Pivots a DataFrame from long to wide format.")
         print("\n17. Merging two columns")
         print("\n18. Lookup")
         print("\n19. Handle missing values")
